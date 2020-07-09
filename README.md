@@ -1,1 +1,1 @@
-![dtinth](https://dtinth.github.io/dtinth/hello.svg)
+![dtinth](https://dtinth.github.io/dtinth/hello.svg?v=2)
