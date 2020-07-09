@@ -1,0 +1,6 @@
+<svg width="200" height="200"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">       
+  <ellipse cx="90" cy="90" rx="80" ry="80"
+  style="fill:yellow;stroke:purple;stroke-width:2" />
+  <image x="32" y="100" href="./test.svg?" height="100" width="100"/>
+</svg>
