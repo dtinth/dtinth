@@ -1,1 +1,1 @@
-[![dtinth](https://dtinth.github.io/dtinth/hello.svg?vvv)](https://github.com/dtinth)
+[![dtinth](https://dtinth-github.vercel.app/Hello.svg)](https://github.com/dtinth)
