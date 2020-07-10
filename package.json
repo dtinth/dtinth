@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "@vercel/node": "^1.7.1",
+    "typescript": "^3.9.6"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "text-to-svg": "^3.1.5",
+    "typeface-arimo": "^0.0.72"
+  }
+}
