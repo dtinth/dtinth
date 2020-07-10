@@ -15,9 +15,13 @@ const typeface = TextToSVG.loadSync(
 const images: { [name: string]: React.FC } = { Hello }
 
 export function renderImage(imageName: string) {
+  const start = Date.now()
+  const markup = renderToStaticMarkup(<Image name={imageName} />)
+  const finish = Date.now()
   return (
     `<?xml version="1.0" encoding="UTF-8"?>` +
-    renderToStaticMarkup(<Image name={imageName} />)
+    markup +
+    `<!-- rendered at ${new Date().toJSON()} in ${finish - start}ms -->`
   )
 }
 
