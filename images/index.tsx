@@ -70,6 +70,16 @@ function Hello() {
         })
         .join('')}
     }
+    #revolve {
+      animation: 10s revolve ease-out;
+      transform: rotateY(0deg) rotate(0deg);
+      transform-origin: 960px 540px;
+    }
+    @keyframes revolve {
+      from {
+        transform: rotateY(450deg) rotate(240deg);
+      }
+    }
   `
   return (
     <svg
@@ -114,16 +124,18 @@ function Hello() {
             )}
         </g>
       </g>
-      <g id="shake">
-        <g transform="translate(960 540) rotate(-14)">
-          <path
-            id="hello"
-            d={typeface.getD('hello', {
-              anchor: 'center middle',
-              fontSize: 640,
-            })}
-          />
-          <use xlinkHref="#hello" x="-8" y="-8" fill="#d7fc70" />
+      <g id="revolve">
+        <g id="shake">
+          <g transform="translate(960 540) rotate(-14)">
+            <path
+              id="hello"
+              d={typeface.getD('hello', {
+                anchor: 'center middle',
+                fontSize: 640,
+              })}
+            />
+            <use xlinkHref="#hello" x="-8" y="-8" fill="#d7fc70" />
+          </g>
         </g>
       </g>
     </svg>
