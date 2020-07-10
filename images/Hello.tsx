@@ -19,7 +19,7 @@ export function Hello() {
       ${Array(512)
         .fill(null)
         .map((_, i, a) => {
-          const rand = () => (Math.random() * 2 - 1) * 16
+          const rand = () => (Math.random() * 2 - 1) * 12
           const percentage = ((i + 1) / (a.length + 1)) * 100
           return `${percentage}% { transform: translate(${rand()}px, ${rand()}px); }`
         })
