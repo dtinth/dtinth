@@ -3,12 +3,16 @@ import { css, ArimoBold } from '../lib'
 
 export function Hello() {
   const style = css`
+    #boxes-container {
+      transform: rotate(${(Math.random() * 2 - 1) * 30}deg);
+      transform-origin: 960px 540px;
+    }
     #boxes {
       transform: translate(0, 0);
       animation: 7s boxes linear infinite;
     }
     @keyframes boxes {
-      to {
+      ${Math.random() < 0.5 ? 'to' : 'from'} {
         transform: translate(-512px, 0);
       }
     }
@@ -54,29 +58,32 @@ export function Hello() {
         </g>
       </defs>
       <rect width="100%" height="100%" fill="#353433" />
-      <g id="boxes">
-        <g transform="translate(-100 -210)">
-          {Array(6)
-            .fill(null)
-            .map((_, i) =>
-              Array(20)
-                .fill(null)
-                .map((_, j) => {
-                  return (
-                    <g
-                      transform={`translate(${j * 256 - (i % 2) * 128} ${
-                        i * 220
-                      })`}
-                    >
-                      <use
-                        xlinkHref={
-                          (j + ~~(i / 2)) % 2 === 0 ? '#box1' : '#box2'
-                        }
-                      />
-                    </g>
-                  )
-                })
-            )}
+      <g id="boxes-container">
+        <g id="boxes">
+          <g transform="translate(-100 -210)">
+            {Array(10)
+              .fill(null)
+              .map((_, i) => i - 2)
+              .map((i) =>
+                Array(20)
+                  .fill(null)
+                  .map((_, j) => {
+                    return (
+                      <g
+                        transform={`translate(${j * 256 - (i % 2) * 128} ${
+                          i * 220
+                        })`}
+                      >
+                        <use
+                          xlinkHref={
+                            (j + ~~(i / 2)) % 2 === 0 ? '#box1' : '#box2'
+                          }
+                        />
+                      </g>
+                    )
+                  })
+              )}
+          </g>
         </g>
       </g>
       <g id="revolve">
