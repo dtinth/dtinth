@@ -3,7 +3,8 @@
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
     "@vercel/node": "^1.7.1",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "vercel": "^19.1.2"
   },
   "dependencies": {
     "react": "^16.13.1",
