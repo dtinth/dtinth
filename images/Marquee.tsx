@@ -2,7 +2,8 @@ import React from 'react'
 import { css, Arimo } from '../lib'
 
 export function Marquee() {
-  let text = 'welcome to my GitHub profile, thanks for visiting!'
+  let text =
+    'welcome to my GitHub profile, thanks for visiting! click on each image to see the source code that generates it.'
   const textOptions = {
     anchor: 'left middle',
     fontSize: 36,
