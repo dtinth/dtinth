@@ -200,7 +200,7 @@ function Box(props: { a: string; b: string; c: string }) {
 
 function HitCounter() {
   const hits = readHits()
-  const text = hits ?? '------'
+  const text = hits == null ? '----' : hits.toString().padStart(4, '0')
   return (
     <path
       d={Cousine.getD(text, { anchor: 'center middle', fontSize: 72 })}
