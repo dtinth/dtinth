@@ -2,11 +2,10 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { Hello } from './Hello'
+import { Marquee } from './Marquee'
+import { SYSTEM_FONT } from '../lib'
 
-// https://css-tricks.com/snippets/css/system-font-stack/
-const SYSTEM_FONT = `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`
-
-const images: { [name: string]: React.FC } = { Hello }
+const images: { [name: string]: React.FC } = { Hello, Marquee }
 
 export function renderImage(imageName: string) {
   const start = Date.now()
