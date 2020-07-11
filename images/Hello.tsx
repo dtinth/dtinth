@@ -23,7 +23,7 @@ export function Hello() {
       ${Array(512)
         .fill(null)
         .map((_, i, a) => {
-          const rand = () => (Math.random() * 2 - 1) * 12
+          const rand = () => (Math.random() * 2 - 1) * 8
           const percentage = ((i + 1) / (a.length + 1)) * 100
           return `${percentage}% { transform: translate(${rand()}px, ${rand()}px); }`
         })
@@ -36,7 +36,34 @@ export function Hello() {
     }
     @keyframes revolve {
       from {
-        transform: rotateY(450deg) rotate(240deg);
+        transform: rotateY(540deg) rotate(240deg);
+      }
+    }
+    #zoom {
+      animation: 10s zoom linear;
+      transform-origin: 960px 540px;
+    }
+    @keyframes zoom {
+      ${Array(101)
+        .fill(null)
+        .map((_, i, a) => i / (a.length - 1))
+        .map((t) => {
+          const v = Math.pow(1 - t, 7)
+          const scale = 1 + 39 * v
+          const tx = 90 * v
+          const ty = -50 * v
+          const p = t * 100
+          return `${p}% { transform: scale(${scale}) translate(${tx}px, ${ty}px); }`
+        })
+        .join('')}
+    }
+    .fadeout {
+      animation: 2s fadeout ease-out;
+      opacity: 0;
+    }
+    @keyframes fadeout {
+      from {
+        opacity: 1;
       }
     }
   `
@@ -86,17 +113,28 @@ export function Hello() {
           </g>
         </g>
       </g>
-      <g id="revolve">
-        <g id="shake">
-          <g transform="translate(960 540) rotate(-14)">
-            <path
-              id="hello"
-              d={ArimoBold.getD('hello', {
-                anchor: 'center middle',
-                fontSize: 640,
-              })}
-            />
-            <use xlinkHref="#hello" x="-8" y="-8" fill="#d7fc70" />
+      <g id="shake">
+        <g id="zoom">
+          <g id="revolve">
+            <g transform="translate(960 540) rotate(-14)">
+              <g id="transition">
+                <path
+                  id="hello"
+                  d={ArimoBold.getD('hello', {
+                    anchor: 'center middle',
+                    fontSize: 640,
+                  })}
+                />
+                <use xlinkHref="#hello" x="-8" y="-8" fill="#d7fc70" />
+                <use
+                  xlinkHref="#hello"
+                  x="-8"
+                  y="-8"
+                  fill="white"
+                  className="fadeout"
+                />
+              </g>
+            </g>
           </g>
         </g>
       </g>
