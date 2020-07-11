@@ -3,13 +3,25 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import { Hello } from './Hello'
 import { Marquee } from './Marquee'
-import { SYSTEM_FONT } from '../lib'
+import { SYSTEM_FONT, WaitFor } from '../lib'
 
 const images: { [name: string]: React.FC } = { Hello, Marquee }
 
-export function renderImage(imageName: string) {
+export async function renderImage(imageName: string) {
   const start = Date.now()
-  const markup = renderToStaticMarkup(<Image name={imageName} />)
+  let markup
+  for (;;) {
+    try {
+      markup = renderToStaticMarkup(<Image name={imageName} />)
+      break
+    } catch (error) {
+      if (error instanceof WaitFor) {
+        await error.promise
+      } else {
+        throw error
+      }
+    }
+  }
   const finish = Date.now()
   return (
     `<?xml version="1.0" encoding="UTF-8"?>` +

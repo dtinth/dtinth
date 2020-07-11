@@ -1,5 +1,5 @@
 import React from 'react'
-import { css, Arimo } from '../lib'
+import { css, Arimo, WaitFor } from '../lib'
 
 export function Marquee() {
   let text =
@@ -15,6 +15,8 @@ export function Marquee() {
   const style = css`
     #text {
       animation: ${totalTimeToScroll}s text linear infinite;
+      animation-delay: 2s;
+      animation-fill-mode: both;
     }
     @keyframes text {
       from {

@@ -11,5 +11,15 @@ export const Arimo = TextToSVG.loadSync(
   require.resolve('typeface-arimo/files/arimo-latin-400.woff')
 )
 
+export const Cousine = TextToSVG.loadSync(
+  require.resolve('typeface-cousine/files/cousine-latin-400.woff')
+)
+
 // This will make Prettier format the CSS.
 export const css = String.raw
+
+export class WaitFor extends Error {
+  constructor(public promise: Promise<any>) {
+    super('WaitFor')
+  }
+}

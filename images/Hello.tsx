@@ -1,5 +1,9 @@
 import React from 'react'
-import { css, ArimoBold } from '../lib'
+import { css, ArimoBold, WaitFor, Cousine } from '../lib'
+import axios from 'axios'
+
+let hitCache: { value: number | null; expires: number } | null = null
+let hitPromise: Promise<any> | null = null
 
 export function Hello() {
   const style = css`
@@ -33,6 +37,8 @@ export function Hello() {
       animation: 10s revolve ease-out;
       transform: rotateY(0deg) rotate(0deg);
       transform-origin: 960px 540px;
+      animation-delay: 1s;
+      animation-fill-mode: both;
     }
     @keyframes revolve {
       from {
@@ -42,6 +48,8 @@ export function Hello() {
     #zoom {
       animation: 10s zoom linear;
       transform-origin: 960px 540px;
+      animation-delay: 1s;
+      animation-fill-mode: both;
     }
     @keyframes zoom {
       ${Array(101)
@@ -49,9 +57,10 @@ export function Hello() {
         .map((_, i, a) => i / (a.length - 1))
         .map((t) => {
           const v = Math.pow(1 - t, 7)
+          const v2 = Math.pow(1 - t, 2)
           const scale = 1 + 39 * v
-          const tx = 90 * v
-          const ty = -50 * v
+          const tx = 90 * v2
+          const ty = -50 * v2
           const p = t * 100
           return `${p}% { transform: scale(${scale}) translate(${tx}px, ${ty}px); }`
         })
@@ -60,9 +69,32 @@ export function Hello() {
     .fadeout {
       animation: 2s fadeout ease-out;
       opacity: 0;
+      animation-delay: 1s;
+      animation-fill-mode: both;
     }
     @keyframes fadeout {
       from {
+        opacity: 1;
+      }
+    }
+    #hits {
+      animation: 1s hits linear;
+      animation-fill-mode: both;
+    }
+    @keyframes hits {
+      0% {
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      64% {
+        transform: scale(1);
+        animation-timing-function: ease-in;
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0.001);
         opacity: 1;
       }
     }
@@ -138,6 +170,11 @@ export function Hello() {
           </g>
         </g>
       </g>
+      <g transform="translate(960 540)">
+        <g id="hits">
+          <HitCounter />
+        </g>
+      </g>
     </svg>
   )
 }
@@ -159,4 +196,46 @@ function Box(props: { a: string; b: string; c: string }) {
       />
     </g>
   )
+}
+
+function HitCounter() {
+  const hits = readHits()
+  const text = hits ?? '------'
+  return (
+    <path
+      d={Cousine.getD(text, { anchor: 'center middle', fontSize: 72 })}
+      fill="#8b8685"
+    />
+  )
+}
+
+async function fetchHits() {
+  const url = process.env.HITS_URL_BASE
+  if (!url) return null
+  const currentHits =
+    (await axios.get<number | null>(url + '/hits.json')).data || 0
+  const value = currentHits + 1
+  axios.patch(url + '/.json', { hits: value })
+  return value
+}
+
+function readHits() {
+  if (hitCache && Date.now() < hitCache.expires) {
+    return hitCache.value
+  }
+  if (hitPromise) {
+    throw new WaitFor(hitPromise)
+  }
+  hitPromise = (async () => {
+    try {
+      const value = await fetchHits()
+      hitCache = { value, expires: Date.now() + 1e3 }
+    } catch (error) {
+      hitCache = { value: null, expires: Date.now() + 1e3 }
+    }
+  })()
+  hitPromise.finally(() => {
+    hitPromise = null
+  })
+  throw new WaitFor(hitPromise)
 }
