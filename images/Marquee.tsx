@@ -38,7 +38,7 @@ export function Marquee() {
       <style type="text/css">{style}</style>
       <g id="text">
         <g transform="translate(0 36)">
-          <path id="hello" d={Arimo.getD(text, textOptions)} />
+          <path id="hello" d={Arimo.getD(text, textOptions)} fill="currentColor" />
         </g>
       </g>
     </svg>
